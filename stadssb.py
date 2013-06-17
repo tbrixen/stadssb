@@ -3,10 +3,7 @@ from time import gmtime, strftime
 import urllib, urllib2, cookielib
 import os, sys
 from HTMLParser import HTMLParser
-
-#Config
-USER = ''
-PASSWORD = ''
+import ConfigParser
 
 class MyParser(HTMLParser):
 	startPoint = 0    #When should we start parsing
@@ -67,14 +64,20 @@ class Fetcher():
 
 if __name__ == '__main__':
 
-    if (USER == '') or (PASSWORD == ''):
-        sys.exit('Error: Empty username or password')
+	#Config
+	config = ConfigParser.ConfigParser()
+	config.read("config.ini")
+	user = config.get("stadssb", "username")
+	password = config.get("stadssb", "password")
+
+	if (user == '') or (password == ''):
+		sys.exit('Error:\tEmpty username or password\n\tYou need to edit the config.ini')
 
 	results = []
 	scriptDir = os.path.dirname(os.path.abspath(__file__))
 
 	### Fetch the html
-	fetcher = Fetcher(USER, PASSWORD)
+	fetcher = Fetcher(user, password)
 	fetcher.fetch()
 	html = fetcher.html
 
