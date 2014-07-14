@@ -51,15 +51,15 @@ class Fetcher():
 		#We start by getting initial cookie, from stads
 		cj = cookielib.CookieJar()
 		opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-		opener.open('https://stadssb.au.dk/SBSTADSC1P/sb/index.jsp')
+		opener.open('https://stadssb.au.dk/sb_STAP/sb/index.jsp')
 
 		print "Brugernavn: ", self.username
 		print "Kode: ", self.password
 
 		#And then we craft our post request to get our login token
 		login_data = urllib.urlencode({'lang' : 'null', 'submit_action' : 'login', 'brugernavn' : self.username, 'adgangskode' : self.password})
-		opener.open('https://stadssb.au.dk/SBSTADSC1P/sb/index.jsp', login_data)
-		resp = opener.open('https://stadssb.au.dk/SBSTADSC1P/sb/resultater/studresultater.jsp')
+		opener.open('https://stadssb.au.dk/sb_STAP/sb/index.jsp', login_data)
+		resp = opener.open('https://stadssb.au.dk/sb_STAP/sb/resultater/studresultater.jsp')
 		self.html = resp.read()
 
 if __name__ == '__main__':
